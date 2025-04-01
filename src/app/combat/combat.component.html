@@ -32,6 +32,16 @@
         <input [(ngModel)]="selectedCombat.date" name="date" id="date" type="date" class="form-control" required />
       </div>
       <div class="form-group">
+        <label for="editWeightCategory">Categoría de Peso</label>
+        <select [(ngModel)]="selectedCombat.weightCategory" name="weightCategory" id="editWeightCategory" class="form-control" required>
+          <option value="">Seleccionar categoría</option>
+          <option value="Peso Pluma">Peso Pluma</option>
+          <option value="Peso Ligero">Peso Ligero</option>
+          <option value="Peso Medio">Peso Medio</option>
+          <option value="Peso Pesado">Peso Pesado</option>
+        </select>
+      </div>
+      <div class="form-group">
         <button type="submit" class="btn btn-primary mr-2">Actualizar</button>
         <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
       </div>
@@ -60,10 +70,33 @@
         <label for="newDate">Fecha del Combate</label>
         <input [(ngModel)]="newCombat.date" name="date" id="newDate" type="date" class="form-control" required />
       </div>
+      <div class="form-group">
+        <label for="newWeightCategory">Categoría de Peso</label>
+        <select [(ngModel)]="newCombat.weightCategory" name="weightCategory" id="newWeightCategory" class="form-control" required>
+          <option value="">Seleccionar categoría</option>
+          <option value="Peso Pluma">Peso Pluma</option>
+          <option value="Peso Ligero">Peso Ligero</option>
+          <option value="Peso Medio">Peso Medio</option>
+          <option value="Peso Pesado">Peso Pesado</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-success">Crear</button>
     </form>
   </div>
 
+
+<!-- Filtro por categoría de peso -->
+<div class="form-group">
+  <label for="filterWeightCategory">Filtrar por Categoría de Peso</label>
+  <select id="filterWeightCategory" (change)="onWeightCategoryChange($event)"
+  >
+    <option value="">Todas las categorías</option>
+    <option value="Peso Pluma">Peso Pluma</option>
+    <option value="Peso Ligero">Peso Ligero</option>
+    <option value="Peso Medio">Peso Medio</option>
+    <option value="Peso Pesado">Peso Pesado</option>
+  </select>
+</div>
   <!-- Lista de combates con paginación -->
   <div class="combat-list">
     <h4 class="mb-3">Lista de Combates</h4>
@@ -81,7 +114,6 @@
         <div class="combat-date">{{ combat.date | date:'dd/MM/yyyy' }}</div>
       </div>
 
-  
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-12">
@@ -103,6 +135,15 @@
                   <small class="text-muted"> - ID: {{ boxerId }}</small>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="weight-category-info">
+              <strong>Categoría de Peso:</strong>
+              <span class="badge badge-secondary">{{ combat.weightCategory || 'Sin categoría' }}</span>
             </div>
           </div>
         </div>
@@ -137,3 +178,4 @@
       </select>
     </div>
   </div>
+</div>

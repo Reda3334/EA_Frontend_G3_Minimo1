@@ -7,6 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { tap } from 'rxjs/operators';
 import { CreateUserDTO } from '../models/user.model';
 
+
 @Component({
   selector: 'app-user',
   imports: [FormsModule, CommonModule, NgxPaginationModule],

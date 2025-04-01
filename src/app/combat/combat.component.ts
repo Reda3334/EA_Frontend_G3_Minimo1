@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+
 @Component({
   selector: 'app-combat',
   imports: [FormsModule, CommonModule, NgxPaginationModule],
@@ -20,7 +21,7 @@ export class CombatComponent implements OnInit {
   combats: Combat[] = [];
   gyms: Gym[] = [];
   users: User[] = [];
-  newCombat: Combat = { gym: '', date: new Date(), boxers: [] };
+  newCombat: Combat = { gym: '', date: new Date(), boxers: [], weightCategory: '' };
   selectedCombat: Combat | null = null;
   boxers: string[] = [];
   loading = false;
@@ -139,16 +140,19 @@ export class CombatComponent implements OnInit {
     }
   }
 
-  // Crear un nuevo combate
   createCombat(): void {
     if (this.newCombat.date instanceof Date) {
       this.newCombat.date = this.newCombat.date.toISOString().split('T')[0];
     }
+  
+    console.log('Datos enviados al backend:', this.newCombat); // Depuración: Verifica los datos antes de enviarlos
+  
     this.loading = true;
     this.combatService.createCombat(this.newCombat).subscribe({
       next: (data) => {
+        console.log('Respuesta del backend:', data); // Depuración: Verifica la respuesta del backend
         this.combats.push(data);
-        this.newCombat = { gym: '', date: new Date(), boxers: [] };
+        this.newCombat = { gym: '', date: new Date(), boxers: [], weightCategory: '' }; // Reinicia el formulario
         this.loading = false;
       },
       error: (error) => {
@@ -258,6 +262,15 @@ export class CombatComponent implements OnInit {
       });
     }
   }
+  filterByWeightCategory(category: string): void {
+    this.combats = this.combats.filter(combat => combat.weightCategory === category);
+  }
+  onWeightCategoryChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedCategory = selectElement.value;
+    this.filterByWeightCategory(selectedCategory);
+  }
+  
 
 
 }

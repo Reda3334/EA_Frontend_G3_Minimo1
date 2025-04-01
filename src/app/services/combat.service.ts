@@ -18,7 +18,9 @@ export class CombatService {
     const combatData = {
       gym: combat.gym, // ID del gimnasio
       date: combat.date instanceof Date ? combat.date : new Date(combat.date),
-      boxers: this.processBoxers(combat.boxers) // Asegurarse de que boxers sea un array
+      boxers: this.processBoxers(combat.boxers), // Asegurarse de que boxers sea un array
+      weightCategory: combat.weightCategory // Agregar la categoría de peso
+      
     };
 
     console.log('Datos enviados al servidor:', combatData);
